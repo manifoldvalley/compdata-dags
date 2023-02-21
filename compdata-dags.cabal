@@ -27,11 +27,13 @@ library
   Exposed-Modules:      Data.Comp.AG
                         Data.Comp.PAG
                         Data.Comp.Dag
+                        Data.Comp.Dag.Algebra
                         Data.Comp.Dag.AG
                         Data.Comp.Dag.PAG
                         Data.Comp.Multi.AG
                         Data.Comp.Multi.PAG
                         Data.Comp.Multi.Dag
+                        Data.Comp.Multi.Dag.Algebra
                         Data.Comp.Multi.Dag.AG
                         Data.Comp.Multi.Dag.PAG
   Other-Modules:        Data.Comp.Dag.Internal
