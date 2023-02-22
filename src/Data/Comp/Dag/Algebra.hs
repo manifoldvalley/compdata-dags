@@ -23,6 +23,8 @@ module Data.Comp.Dag.Algebra
     (
       cataDag
     , cataMDag
+    , cataDag'
+    , cataMDag'
     , module I
     ) where
 
@@ -44,4 +46,14 @@ cataMDag f Dag {root, edges} = f =<< mapM run root where
     run :: Context f Node -> m a
     run (Term t) = f =<< mapM run t
     run (Hole n) = f =<< mapM run (edges IntMap.! n)
+
+cataDag' :: forall f a . Functor f => Alg f a -> Dag' f -> a
+cataDag' f Dag' {root', edges'} = f $ fmap run root' where
+    run :: Node -> a
+    run n = f . fmap run $ edges' IntMap.! n
+
+cataMDag' :: forall f a m . (Traversable f, Monad m) => AlgM m f a -> Dag' f -> m a
+cataMDag' f Dag' {root', edges'} = f =<< mapM run root' where
+    run :: Node -> m a
+    run n = f =<< mapM run (edges' IntMap.! n)
 

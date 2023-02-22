@@ -24,6 +24,8 @@ module Data.Comp.Multi.Dag.Algebra
     (
       cataDag
     , cataMDag
+    , cataDag'
+    , cataMDag'
     , module I
     ) where
 
@@ -47,3 +49,12 @@ cataMDag f Dag {root, edges} = f =<< hmapM run root where
     run (Term t) = f =<< hmapM run t
     run (Hole n) = f =<< hmapM run (edges M.! n)
 
+cataDag' :: forall f a . HFunctor f => Alg f a -> Dag' f :-> a
+cataDag' f Dag' {root', edges'} = f $ hfmap run root' where
+    run :: Node :-> a
+    run n = f . hfmap run $ edges' M.! n
+
+cataMDag' :: forall f a m . (HTraversable f, Monad m) => AlgM m f a -> NatM m (Dag' f) a
+cataMDag' f Dag' {root', edges'} = f =<< hmapM run root' where
+    run :: NatM m Node a
+    run n = f =<< hmapM run (edges' M.! n)
