@@ -28,10 +28,11 @@ import Data.Type.Equality
 import Data.Typeable
 import Data.Bifunctor
 import Unsafe.Coerce
+import Data.Kind
 
 -- | The type of node in a 'Dag'.
 
-data Node :: * -> * where
+data Node :: Type -> Type where
     Node :: Typeable t =>  {getNode :: Int} -> Node t
 
 instance Typeable t => Num (Node t) where

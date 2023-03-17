@@ -72,9 +72,10 @@ import qualified Data.Dependent.Map as M
 import qualified Data.Dependent.Sum as S
 import Unsafe.Coerce
 import Data.GADT.Compare
+import Data.Kind
 
 -- | This class makes Term f and f (Term f) instances of GEq, so they can be used in dags.
-class HFgeq (f :: (* ->  *) -> * -> *) where
+class HFgeq (f :: (Type ->  Type) -> Type -> Type) where
     -- | Like geq, this function compares both value and type.
     hfgeq :: GEq a => f a i -> f a j -> Maybe (i :~: j)
 
