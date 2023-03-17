@@ -56,4 +56,3 @@ cataMDag' :: forall f a m . (Traversable f, Monad m) => AlgM m f a -> Dag' f -> 
 cataMDag' f Dag' {root', edges'} = f =<< mapM run root' where
     run :: Node -> m a
     run n = f =<< mapM run (edges' IntMap.! n)
-
