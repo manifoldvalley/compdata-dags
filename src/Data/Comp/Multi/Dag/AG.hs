@@ -52,10 +52,9 @@ import Data.Comp.Multi.HTraversable
 import Data.Vector (Vector,MVector)
 import qualified Data.Vector as Vec
 import qualified Data.Vector.Generic.Mutable as MVec
-import Unsafe.Coerce
 
 newtype DPair f i = DPair (Node i, f (Context f Node) i)
-type EPair f = E (DPair f)
+type EPair f = ET (DPair f)
 
 -- | This function runs an attribute grammar on a dag. The result is
 -- the (combined) synthesised attribute at the root of the dag.
@@ -110,14 +109,14 @@ runAG res syn inh dinit (Dag root edges nodeCount) = uFin where
           runF d (Term t)  = run d t
           -- This function is applied to each edge
           iter :: EPair f -> ST s ()
-          iter (E (DPair (n,t))) = do
+          iter (ET (DPair (n,t))) = do
             writeSTRef count 0  -- re-initialize counter
             u <- run (fromJust $ dmapFin Vec.! getNode n) t
             MVec.unsafeWrite umap (getNode n) u
       -- first apply to the root
       u <- run dFin root
       -- then apply to the edges
-      mapM_ iter ((\(n S.:=> t) -> E $ DPair (n, t)) <$> M.toList edges)
+      mapM_ iter ((\(n@Node {} S.:=> t) -> ET $ DPair (n, t)) <$> M.toList edges)
       -- finalise the mappings for attribute values
       dmapFin <- Vec.unsafeFreeze dmap
       umapFin <- Vec.unsafeFreeze umap
@@ -150,13 +149,13 @@ runSynAG syn (Dag root edges nodeCount) = runST runM where
           runF (Term t)     = K <$> run t
           -- This function is applied to each edge
           iter :: EPair f -> ST s ()
-          iter (E (DPair (n,t))) = do
+          iter (ET (DPair (n,t))) = do
             u <- run  t
             MVec.unsafeWrite umap (getNode n) u
       -- first apply to the root
       u <- run root
       -- then apply to the edges
-      mapM_ iter ((\(n S.:=> t) -> E $ DPair (n, t)) <$> M.toList edges)
+      mapM_ iter ((\(n@Node {} S.:=> t) -> ET $ DPair (n, t)) <$> M.toList edges)
       -- finalise the mappings for attribute values
       umapFin <- Vec.unsafeFreeze umap
       return u
@@ -190,12 +189,12 @@ runRewrite res syn inh rewr dinit (Dag root edges nodeCount) = result where
       allEdges <- MVec.new nodeCount
       let -- This function is applied to each edge
           iter :: EPair f -> ST s ()
-          iter (E (DPair (Node node,s))) = do
+          iter (ET (DPair (Node node,s))) = do
              let d = fromJust $ dmapFin Vec.! node
              writeSTRef count 0
              K u :*: t <- run d s
              MVec.unsafeWrite umap node u
-             MVec.unsafeWrite allEdges node (E t)
+             MVec.unsafeWrite allEdges node (ET t)
           -- Runs the AG on an edge with the given input inherited
           -- attribute value and produces the output synthesised
           -- attribute value along with the rewritten subtree.
@@ -229,7 +228,7 @@ runRewrite res syn inh rewr dinit (Dag root edges nodeCount) = result where
       -- first apply to the root
       K u :*: interRoot <- run dFin root
       -- then apply to the edges
-      mapM_ iter . fmap (\(k S.:=> v) -> E $ DPair (k,v)) $ M.toList edges
+      mapM_ iter . fmap (\(k@Node {} S.:=> v) -> ET $ DPair (k,v)) $ M.toList edges
       -- finalise the mappings for attribute values and target DAG
       dmapFin <- Vec.unsafeFreeze dmap
       umapFin <- Vec.unsafeFreeze umap
@@ -255,10 +254,10 @@ runSynRewrite syn rewr (Dag root edges nodeCount) = runST runM where
       allEdges <- MVec.new nodeCount
       let -- This function is applied to each edge
           iter :: EPair f -> ST s ()
-          iter (E (DPair (Node node,s))) = do
+          iter (ET (DPair (Node node,s))) = do
              K u :*: t <- run s
              MVec.unsafeWrite umap node u
-             MVec.unsafeWrite allEdges node (E t)
+             MVec.unsafeWrite allEdges node (ET t)
           -- Runs the AG on an edge with the given input inherited
           -- attribute value and produces the output synthesised
           -- attribute value along with the rewritten subtree.
@@ -276,7 +275,7 @@ runSynRewrite syn rewr (Dag root edges nodeCount) = runST runM where
       -- first apply to the root
       K u :*: interRoot <- run root
       -- then apply to the edges
-      mapM_ iter . fmap (\(k S.:=> v) -> E $ DPair (k,v)) $ M.toList edges
+      mapM_ iter . fmap (\(k@Node {} S.:=> v) -> ET $ DPair (k,v)) $ M.toList edges
       -- finalise the mappings for attribute values and target DAG
       umapFin <- Vec.unsafeFreeze umap
       allEdgesFin <- Vec.unsafeFreeze allEdges
@@ -287,7 +286,7 @@ runSynRewrite syn rewr (Dag root edges nodeCount) = runST runM where
 -- edges are represented by a 'Vector'.
 relabelNodes :: forall f i . (Typeable f, HTraversable f, Typeable i)
              => Context f Node i
-             -> Vector (E (Cxt Hole f Node))
+             -> Vector (ET (Cxt Hole f Node))
              -> Int
              -> Dag f i
 relabelNodes root edges nodeCount = runST run where
@@ -311,19 +310,19 @@ relabelNodes root edges nodeCount = runST run where
                Just newNode -> return $ Node newNode
                Nothing ->
                    case edges Vec.! getNode node of
-                     (E (Hole (Node n))) -> do
+                     (ET (Hole (Node n))) -> do
                        -- We found an edge that just maps to another
                        -- node. We shortcut this edge.
                        newNode <- build $ Node n
                        MVec.unsafeWrite newNodes nodeVal (Just $ getNode newNode)
                        return newNode
-                     E (Term f) -> do
+                     ET (Term f) -> do
                         -- Create a new node and call build recursively
                        newNode <- readSTRef curNode
                        writeSTRef curNode $! (newNode+1)
                        MVec.unsafeWrite newNodes nodeVal (Just newNode)
                        f' <- hmapM (hmapM build) f
-                       modifySTRef newEdges (M.insert (unsafeCoerce $ (Node newNode :: Node ())) f')
+                       modifySTRef newEdges (M.insert ((Node newNode )) f')
                        return $ Node newNode
           -- This function is only used for the root. If the root is
           -- only a node, we lookup the mapping for that
