@@ -90,11 +90,11 @@ instance (HFgeq f, HFgeq g) => HFgeq (f :+: g) where
 instance (HFgeq f, Eq q) => HFgeq (f :&: q) where
     (x :&: q) `hfgeq` (y :&: r) = if q==r then x `hfgeq` y else Nothing
 
-instance {-# OVERLAPPING #-} HFgeq f => GEq (Term f) where
+instance {-# OVERLAPPING #-} (GEq (f (Cxt NoHole f (K ()))), HFgeq f) => GEq (Term f) where
     Term x `geq` Term y = x `geq` y
 
-instance (HFgeq f, GEq a) => GEq (f a) where
-    x `geq` y = x `hfgeq` y
+-- instance (HFgeq f, GEq a) => GEq (f a) where
+--     x `geq` y = x `hfgeq` y
 
 instance Show (Node a) where
     show = show . getNode
