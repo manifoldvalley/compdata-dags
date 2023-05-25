@@ -3,6 +3,7 @@
 {-# LANGUAGE Rank2Types            #-}
 {-# LANGUAGE TypeOperators         #-}
 {-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE GADTs                 #-}
 
 --------------------------------------------------------------------------------
 -- |
