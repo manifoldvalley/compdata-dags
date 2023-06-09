@@ -113,4 +113,4 @@ runSynRewrite up trans t = run t where
         bel :: forall j . Term f j -> (K u :*: Term g) j
         bel s = let (u', s') = run s in K u' :*: s'
         u = explicit up u (unK . ffst) $ hfmap bel t
-        t'' = appCxt . hfmap fsnd $ explicit trans u (unK . ffst) $ hfmap bel t
+        t'' = appCxt . hfmap fsnd . explicit trans u (unK . ffst) $ hfmap bel t
