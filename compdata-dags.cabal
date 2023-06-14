@@ -44,7 +44,7 @@ library
                         Data.Comp.Multi.PAG.Internal
   Build-Depends:	base >= 4.7, base < 5, compdata >= 0.10, unordered-containers, 
                         mtl, containers, vector, hashable, dependent-map, dependent-sum, dependent-hashmap, prim-uniq, some
-  Extensions:           PolyKinds
+  Extensions:           PolyKinds, NoStarIsType
   hs-source-dirs:	src
   ghc-options:          -W
 
