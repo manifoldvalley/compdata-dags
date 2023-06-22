@@ -6,7 +6,7 @@ import Test.Framework
 
 main = defaultMain allTests
 
-allTests =    
+allTests =
     [ testGroup "Examples" Ex.tests
     , testGroup "Dag" Dag.tests
     , testGroup "MultiExamples" MDag.tests

@@ -20,7 +20,7 @@ import qualified Examples.RepminPAG as PAG
 import Data.Comp.Dag.Internal
 import qualified Data.IntMap as IntMap
 
-tests = 
+tests =
     [ testGroup "Repmin"
       [ testCase "AG" case_repminAG
       , testCase "Rewrite" case_repminRewrite
@@ -32,7 +32,7 @@ tests =
     , testProperty "LeavesBelow" prop_leavesBelow
     , testCase "TypeInference" case_typeInf
     ]
-    
+
 
 case_repminAG = testAllEq' intTrees repmin repminG
 case_repminRewrite = testAllEq' intTrees repmin (unravel . repminG')
@@ -62,9 +62,9 @@ countLeaves (TreeNode x y) = countLeaves' x + countLeaves' y
   where
     countLeaves' (Term t) = countLeaves t
     countLeaves' (Hole _) = 0
-        
 
-case_repminTreePAG = mapM_ run intTrees 
+
+case_repminTreePAG = mapM_ run intTrees
     where run t = repmin t @=? PAG.repmin t
 
 prop_leavesBelow d = testAllEq intTrees (leavesBelow d) (leavesBelowG d)

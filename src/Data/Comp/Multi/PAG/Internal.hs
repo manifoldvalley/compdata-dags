@@ -18,7 +18,7 @@
 --
 --------------------------------------------------------------------------------
 
-module Data.Comp.Multi.PAG.Internal 
+module Data.Comp.Multi.PAG.Internal
     ( module Data.Comp.Multi.PAG.Internal , module I
     ) where
 

@@ -29,7 +29,7 @@ type Edges f = IntMap (f (Context f Node))
 -- | The type of directed acyclic graphs (DAGs). 'Dag's are used as a
 -- compact representation of 'Term's.
 
-data Dag f = Dag 
+data Dag f = Dag
     { root      :: f (Context f Node) -- ^ the entry point for the DAG
     , edges     :: Edges f            -- ^ the edges of the DAG
     , nodeCount :: Int                -- ^ the total number of nodes in the DAG
