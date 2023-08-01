@@ -21,7 +21,7 @@ import Data.Comp.Dag
 import qualified Data.Comp.Dag.PAG as Dag
 import Data.Comp.Term
 import Examples.Types
-import Data.Comp.Multi.HFunctor 
+import Data.Comp.Multi.HFunctor
 
 import Data.Foldable
 

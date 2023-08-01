@@ -33,31 +33,31 @@ module Data.Comp.Multi.Dag.PAG
     --, module I
     ) where
 
-import Control.Monad.ST
-
-import Data.Comp.Multi.Dag
-import Data.Comp.Multi.Dag.Internal
-import Data.Comp.Multi.Mapping as I
-import Data.Comp.Multi.Projection as I
-import Data.Comp.Multi.PAG.Internal
-import qualified Data.Comp.Multi.PAG.Internal as I hiding (explicit)
-import Data.Comp.Multi.Term
-
-import qualified Data.IntMap as IntMap
-import Data.IntMap (IntMap)
-
-import Data.Vector (MVector)
-
-
-import Data.Maybe
-import Data.STRef
-import qualified Data.Traversable as Traversable
-
-
-import qualified Data.Vector as Vec
-import qualified Data.Vector.Generic.Mutable as MVec
-
-import Control.Monad.State
+--import Control.Monad.ST
+--
+--import Data.Comp.Multi.Dag
+--import Data.Comp.Multi.Dag.Internal
+--import Data.Comp.Multi.Mapping as I
+--import Data.Comp.Multi.Projection as I
+--import Data.Comp.Multi.PAG.Internal
+--import qualified Data.Comp.Multi.PAG.Internal as I hiding (explicit)
+--import Data.Comp.Multi.Term
+--
+--import qualified Data.IntMap as IntMap
+--import Data.IntMap (IntMap)
+--
+--import Data.Vector (MVector)
+--
+--
+--import Data.Maybe
+--import Data.STRef
+--import qualified Data.Traversable as Traversable
+--
+--
+--import qualified Data.Vector as Vec
+--import qualified Data.Vector.Generic.Mutable as MVec
+--
+--import Control.Monad.State
 
     {-
 

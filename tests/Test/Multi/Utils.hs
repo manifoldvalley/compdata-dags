@@ -49,6 +49,6 @@ testAllDag2' p message trees f1 f2 = mapM_ run trees
 
 testAllEq :: (HFgeq f, HTraversable f, Show a, Eq a, Typeable f) => [T (Term f)] -> (Term f :=> a) -> (Dag f :=> a) -> Property
 testAllEq trees f1 f2 = conjoin $ map run trees
-    where run (T t) = ioProperty $ do 
+    where run (T t) = ioProperty $ do
                         d <- reifyDag t
                         return (f1 t === f2 d)

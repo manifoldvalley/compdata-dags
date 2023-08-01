@@ -18,13 +18,13 @@
 --
 --------------------------------------------------------------------------------
 
-module Data.Comp.Multi.PAG.Internal 
+module Data.Comp.Multi.PAG.Internal
     ( module Data.Comp.Multi.PAG.Internal , module I
     ) where
 
 
-import Data.Comp.Multi.Mapping
-import Data.Comp.Multi.Term
+--import Data.Comp.Multi.Mapping
+--import Data.Comp.Multi.Term
 import Data.Comp.Multi.Projection
 import Data.Comp.Multi.HFunctor
 import Data.Comp.Multi.AG.Internal as I (explicit, (:=>:) (..))

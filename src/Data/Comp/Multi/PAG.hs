@@ -26,12 +26,12 @@ module Data.Comp.Multi.PAG
     --, module I
     )  where
 
-import Data.Comp.Multi.PAG.Internal
-import qualified Data.Comp.Multi.PAG.Internal as I hiding (explicit)
-import Data.Comp.Multi.Algebra
-import Data.Comp.Multi.Mapping as I
-import Data.Comp.Multi.Term
-import Data.Comp.Multi.Projection as I
+--import Data.Comp.Multi.PAG.Internal
+--import qualified Data.Comp.Multi.PAG.Internal as I hiding (explicit)
+--import Data.Comp.Multi.Algebra
+--import Data.Comp.Multi.Mapping as I
+--import Data.Comp.Multi.Term
+--import Data.Comp.Multi.Projection as I
 
 
 

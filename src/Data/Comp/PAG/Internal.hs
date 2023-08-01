@@ -18,8 +18,8 @@
 --
 --------------------------------------------------------------------------------
 
-module Data.Comp.PAG.Internal 
-    ( module Data.Comp.PAG.Internal 
+module Data.Comp.PAG.Internal
+    ( module Data.Comp.PAG.Internal
     , module I
     ) where
 
@@ -27,7 +27,7 @@ module Data.Comp.PAG.Internal
 import Data.Comp.Mapping
 import Data.Comp.Term
 import Data.Comp.Multi.Projection
-import Data.Comp.AG.Internal as I (explicit) 
+import Data.Comp.AG.Internal as I (explicit)
 
 -- | This function provides access to attributes of the immediate
 -- children of the current node.
