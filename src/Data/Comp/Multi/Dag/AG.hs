@@ -37,7 +37,7 @@ import Control.Monad.ST
 import Data.Comp.Multi.AG.Internal
 import qualified Data.Comp.Multi.AG.Internal as I hiding (explicit)
 import Data.Comp.Multi.Dag
-import Data.Comp.Multi.Dag.Internal
+--import Data.Comp.Multi.Dag.Internal
 import Data.Comp.Multi.Mapping as I
 import Data.Comp.Multi.Projection as I
 import Data.Comp.Multi.Term
