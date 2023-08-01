@@ -31,7 +31,7 @@ module Data.Comp.Multi.Dag.Algebra
 
 import Data.Comp.Multi
 import Data.Comp.Multi.Dag
-import Data.Comp.Multi.Dag.Internal
+--import Data.Comp.Multi.Dag.Internal
 import Data.Comp.Multi.HTraversable
 import Data.Comp.Multi.Algebra as I
 import qualified Data.Dependent.Map as M
