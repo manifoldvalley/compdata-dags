@@ -39,12 +39,10 @@ import Control.Monad.State
 import Data.Comp.Dag.Internal
 import Data.Comp.Equality
 import Data.Comp.Term
-import Data.Foldable (Foldable)
 import qualified Data.HashMap.Lazy as HashMap
 import Data.IntMap (IntMap)
 import qualified Data.IntMap as IntMap
 import Data.IORef
-import Data.Traversable (Traversable)
 import qualified Data.Traversable as Traversable
 import Data.Typeable
 import System.Mem.StableName
